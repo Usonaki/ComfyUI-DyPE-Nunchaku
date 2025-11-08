@@ -1,31 +1,13 @@
-<a id="readme-top"></a>
+This repository is a fork of wildminder/ComfyUI-DyPE. 
 
-<div align="center">
-  <h1 align="center">ComfyUI-DyPE</h1>
+It includes partially hand-written, partially AI-genererated changes that make the DyPE node compatible with Nunchaku FLUX models.
+The node still supports the standard models as before.
+I'm not a professional programmer and I have no plans on maintaining this repository.
 
-<img src="https://github.com/user-attachments/assets/4f11966b-86f7-4bdb-acd4-ada6135db2f8" alt="ComfyUI-DyPE Banner" width="70%">
+In my tests I got a 100% speed boost when generating a 2048x2048 sized image on a RTX 2070.
 
-  
-  <p align="center">
-    A ComfyUI custom node that implements <strong>DyPE (Dynamic Position Extrapolation)</strong>, enabling FLUX-based models to generate ultra-high-resolution images (4K and beyond) with exceptional coherence and detail.
-    <br />
-    <br />
-    <a href="https://github.com/wildminder/ComfyUI-DyPE/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
-    ·
-    <a href="https://github.com/wildminder/ComfyUI-DyPE/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
-  </p>
-</div>
+All other functionality, documentation, and usage instructions are preserved from the original project — see the sections below for installation, usage, and known limitations.
 
-<!-- PROJECT SHIELDS -->
-<div align="center">
-
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![Forks][forks-shield]][forks-url]
-
-</div>
-
-<br>
 
 ## About The Project
 
