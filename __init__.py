@@ -2,7 +2,7 @@ import torch
 from comfy_api.latest import ComfyExtension, io
 from .src.patch import apply_dype_to_flux
 
-class DyPE_FLUX(io.ComfyNode):
+class DyPE_Nunchaku(io.ComfyNode):
     """
     Applies DyPE (Dynamic Position Extrapolation) to a FLUX model.
     This allows generating images at resolutions far beyond the model's training scale
@@ -12,8 +12,8 @@ class DyPE_FLUX(io.ComfyNode):
     @classmethod
     def define_schema(cls) -> io.Schema:
         return io.Schema(
-            node_id="DyPE_FLUX",
-            display_name="DyPE for FLUX",
+            node_id="DyPE_Nunchaku",
+            display_name="DyPE for Nunchaku Flux",
             category="model_patches/unet",
             description="Applies DyPE (Dynamic Position Extrapolation) to a FLUX model for ultra-high-resolution generation.",
             inputs=[
@@ -76,17 +76,23 @@ class DyPE_FLUX(io.ComfyNode):
         """
         Clones the model and applies the DyPE patch for both the noise schedule and positional embeddings.
         """
-        if not hasattr(model.model, "diffusion_model") or not hasattr(model.model.diffusion_model, "pe_embedder"):
-             raise ValueError("This node is only compatible with FLUX models.")
+        is_flux = False
+        is_nunchaku = False
+        if hasattr(model.model, "diffusion_model") and hasattr(model.model.diffusion_model, "pe_embedder"):
+            is_flux = True
+        if hasattr(model.model, "diffusion_model") and hasattr(model.model.diffusion_model, "model") and hasattr(model.model.diffusion_model.model, "pos_embed"):
+            is_nunchaku = True
+        if not is_flux and not is_nunchaku:
+            raise ValueError("This node is only compatible with FLUX models.")
         
-        patched_model = apply_dype_to_flux(model, width, height, method, enable_dype, dype_exponent, base_shift, max_shift)
+        patched_model = apply_dype_to_flux(model, is_nunchaku, width, height, method, enable_dype, dype_exponent, base_shift, max_shift)
         return io.NodeOutput(patched_model)
 
-class DyPEExtension(ComfyExtension):
+class DyPEExtensionNunchaku(ComfyExtension):
     """Registers the DyPE node."""
 
     async def get_node_list(self) -> list[type[io.ComfyNode]]:
-        return [DyPE_FLUX]
+        return [DyPE_Nunchaku]
 
-async def comfy_entrypoint() -> DyPEExtension:
-    return DyPEExtension()
+async def comfy_entrypoint() -> DyPEExtensionNunchaku:
+    return DyPEExtensionNunchaku()
