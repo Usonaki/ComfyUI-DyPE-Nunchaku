@@ -1,3 +1,5 @@
+## Introduction
+
 This repository is a fork of wildminder/ComfyUI-DyPE. 
 
 It includes partially hand-written, partially AI-genererated changes that make the DyPE node compatible with Nunchaku FLUX models.
